@@ -3,7 +3,9 @@ const router = require("express").Router()
 const userRoutes = require("./UserRoutes")
 const photoRoutes = require("./PhotoRoutes")
 
-router.use("/photos", photoRoutes)
+const { authentication } = require("../middlewares/auth")
+
+router.use("/photos", authentication, photoRoutes)
 router.use("/users", userRoutes)
 
 module.exports = router

@@ -4,8 +4,10 @@ const {
 } = require("../models")
 
 class PhotoController {
+  // bisa diakses siapa saja yang sudah login
   static async getAllPhotos(req, res) {
     try {
+
       const data = await Photo.findAll({
         include: User
       })
@@ -16,13 +18,16 @@ class PhotoController {
     }
   }
 
+  // bisa diakses jika UserIdnya sama dengan yang login
   static async getPhotoById(req, res) {
     try {
       const { id } = req.params
+      const userData = req.UserData
 
       const data = await Photo.findOne({
         where: {
-          id: id
+          id: id,
+          UserId: userData.id
         }
       })
 
@@ -48,10 +53,13 @@ class PhotoController {
         image_url
       } = req.body
 
+      const userData = req.UserData
+
       const data = await Photo.create({
         title,
         caption,
-        image_url
+        image_url,
+        UserId: userData.id
       })
 
       res.status(201).json(data)
