@@ -1,2 +1,3 @@
 photo_album/node_modules
+photo_album/.env
 test_graphql/node_modules
